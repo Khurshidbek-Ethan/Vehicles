@@ -24,19 +24,19 @@ const MemberSchema = new Schema(
 		memberPhone: {
 			type: String,
 			index: { unique: true, sparse: true },
-			require: true,
+			required: true,
 		},
 
 		memberNick: {
 			type: String,
 			index: { unique: true, sparse: true },
-			require: true,
+			required: true,
 		},
 
 		memberPassword: {
 			type: String,
 			select: false,
-			require: true,
+			required: true,
 		},
 
 		memberFullName: {
