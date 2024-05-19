@@ -93,7 +93,7 @@ export class MemberService {
 			const newView = await this.viewService.recordView(viewInput);
 			if (newView) {
 				//increase memberView
-				await this.memberModel.findOneAndUpdate(search, { $inc: { memberViews: 1 } }, { new: true }).exec();
+			   await this.memberModel.findOneAndUpdate(search, { $inc: { memberViews: 1 } }, { new: true }).exec();
 				targetMember.memberViews++;
 			}
 		}
