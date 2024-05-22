@@ -32,7 +32,7 @@ export class MemberResolver {
 		console.log('Mutation: login');
 		return await this.memberService.login(input);
 	}
-
+	// test un ozimiz un
 	@UseGuards(AuthGuard)
 	@Query(() => String)
 	public async checkAuth(@AuthMember('memberNick') memberNick: string): Promise<string> {
@@ -42,6 +42,7 @@ export class MemberResolver {
 		return `Hi ${memberNick}`;
 	}
 
+	// test un ozimiz un
 	@Roles(MemberType.USER, MemberType.AGENT)
 	@UseGuards(RolesGuard)
 	@Query(() => String)

@@ -1,9 +1,7 @@
-import { Field,  Int,  ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import { IsOptional } from 'class-validator';
-
-
 
 @ObjectType()
 export class Property {
@@ -13,11 +11,11 @@ export class Property {
 	@Field(() => PropertyType)
 	propertyType: PropertyType;
 
-	@Field(() => PropertyLocation)
-	propertyStatus: PropertyLocation;
+	@Field(() => PropertyStatus)
+	propertyStatus: PropertyStatus;
 
-	@Field(() => PropertyType)
-	propertyLocation: PropertyType;
+	@Field(() => PropertyLocation)
+	propertyLocation: PropertyLocation;
 
 	@Field(() => String)
 	propertyAddress: string;
