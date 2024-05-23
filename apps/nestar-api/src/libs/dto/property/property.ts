@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
-import { IsOptional } from 'class-validator';
+import { Member, TotalCounter } from '../member/member';
 
 @ObjectType()
 export class Property {
@@ -29,10 +29,10 @@ export class Property {
 	@Field(() => Number)
 	propertySquare: number;
 
-	@Field(() => Int)
+	@Field(() => Int) // -> to change Int later
 	propertyBeds: number;
 
-	@Field(() => Int)
+	@Field(() => Int) // -> to change Int later
 	propertyRooms: number;
 
 	@Field(() => Int)
@@ -50,7 +50,6 @@ export class Property {
 	@Field(() => [String])
 	propertyImages: string[];
 
-	@IsOptional()
 	@Field(() => String, { nullable: true })
 	propertyDesc?: string;
 
@@ -63,15 +62,12 @@ export class Property {
 	@Field(() => String)
 	memberId: ObjectId;
 
-	@IsOptional()
 	@Field(() => Date, { nullable: true })
 	soldAt?: Date;
 
-	@IsOptional()
 	@Field(() => Date, { nullable: true })
 	deletedAt?: Date;
 
-	@IsOptional()
 	@Field(() => Date, { nullable: true })
 	constructedAt?: Date;
 
@@ -80,4 +76,18 @@ export class Property {
 
 	@Field(() => Date)
 	updatedAt: Date;
+
+	/** From AGGREGATION **/
+	// aggregation orqali memberData ni hosil qilyabmiz
+	@Field(() => Member, { nullable: true })
+	memberData?: Member;
+}
+
+@ObjectType()
+export class Properties {
+	@Field(() => [Property])
+	list: Property[];
+
+	@Field(() => [TotalCounter], { nullable: true })
+	metaCounter: TotalCounter[];
 }
