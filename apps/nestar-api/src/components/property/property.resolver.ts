@@ -1,8 +1,13 @@
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { PropertyService } from './property.service';
 import { Properties, Property } from '../../libs/dto/property/property';
-import { AgentPropertiesInquiry, PropertiesInquiry, PropertyInput } from '../../libs/dto/property/property.input';
+import {
+	AgentPropertiesInquiry,
+	AllProperitesInquiry,
+	PropertiesInquiry,
+	PropertyInput,
+} from '../../libs/dto/property/property.input';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { MemberType } from '../../libs/enums/member.enum';
 import { UseGuards } from '@nestjs/common';
@@ -79,5 +84,40 @@ export class PropertyResolver {
 		console.log('Query: getAgetnsProperties');
 
 		return await this.propertyService.getAgentProperties(memberId, input);
+	}
+
+	/**  ADMIN  **/
+
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Query((returns) => Properties) //-> Properties
+	public async getAllPropertiesByAdmin(
+		@Args('input') input: AllProperitesInquiry,
+		// @AuthMember('_id') memberId: ObjectId,
+	): Promise<Properties> {
+		console.log('Query: getAllPropertiesByAdmin');
+
+		return await this.propertyService.getAllPropertiesByAdmin(input);
+	}
+
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Mutation((returns) => Property)
+	public async updatePropertyByAdmin(@Args('input') input: PropertyUpdate): Promise<Property> {
+		console.log('Mutation: updatePropertyByAdmin');
+
+		input._id = shapeIntoMongoObjectId(input._id);
+
+		return await this.propertyService.updatePropertyByAdmin(input);
+	}
+
+	@Roles(MemberType.ADMIN)
+	@UseGuards(RolesGuard)
+	@Mutation((returns) => Property)
+	public async removePropertyByAdmin(@Args('input') input: string): Promise<Property> {
+		console.log('Mutation: removePropertyByAdmin');
+
+		const propertyId = shapeIntoMongoObjectId(input);
+		return await this.propertyService.removePropertyByAdmin(propertyId);
 	}
 }
