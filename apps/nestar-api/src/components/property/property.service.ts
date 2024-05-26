@@ -225,9 +225,9 @@ export class PropertyService {
 					$facet: {
 						list: [
 							{ $skip: (input.page - 1) * input.limit },
-							{ $limit: input.limit }, // [property1] [property2]
-							lookupMember, //['$memberData']
-							{ $unwind: '$memberData' }, // memberData ni arraydan chiqarib memberDataga tenglab beradi
+							{ $limit: input.limit },
+							lookupMember,
+							{ $unwind: '$memberData' },
 						],
 						metaCounter: [{ $count: 'total' }],
 					},

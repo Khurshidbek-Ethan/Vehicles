@@ -93,7 +93,7 @@ export class PropertyResolver {
 	@Query((returns) => Properties) //-> Properties
 	public async getAllPropertiesByAdmin(
 		@Args('input') input: AllProperitesInquiry,
-		// @AuthMember('_id') memberId: ObjectId,
+		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Properties> {
 		console.log('Query: getAllPropertiesByAdmin');
 
@@ -111,10 +111,12 @@ export class PropertyResolver {
 		return await this.propertyService.updatePropertyByAdmin(input);
 	}
 
+	// propertylarimizni ochirish mantigini faqatgina admin amalga oshiroladi
 	@Roles(MemberType.ADMIN)
 	@UseGuards(RolesGuard)
 	@Mutation((returns) => Property)
-	public async removePropertyByAdmin(@Args('input') input: string): Promise<Property> {
+	//qaysi propertyIdni databasdan ochirmoqchimiz
+	public async removePropertyByAdmin(@Args('propertyId') input: string): Promise<Property> {
 		console.log('Mutation: removePropertyByAdmin');
 
 		const propertyId = shapeIntoMongoObjectId(input);
