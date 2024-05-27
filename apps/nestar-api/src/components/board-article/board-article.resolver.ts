@@ -45,7 +45,7 @@ export class BoardArticleResolver {
 	}
 
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => BoardArticle)
+	@Mutation(() => BoardArticle)
 	public async updateBoardArticle(
 		@Args('input') input: BoardArticleUpdate,
 		@AuthMember('_id') memberId: ObjectId,
@@ -74,7 +74,7 @@ export class BoardArticleResolver {
 	@Query((returns) => BoardArticles)
 	public async getAllBoardArticlesByAdmin(
 		@Args('input') input: AllBoardArticlesInquiry,
-		@AuthMember('_id')memberId:ObjectId
+		@AuthMember('_id') memberId: ObjectId,
 	): Promise<BoardArticles> {
 		console.log('Query: getAllBoardArticlesByAdmin');
 
@@ -86,7 +86,7 @@ export class BoardArticleResolver {
 	@Mutation((returns) => BoardArticle)
 	public async updateBoardArticleByAdmin(
 		@Args('input') input: BoardArticleUpdate,
-		@AuthMember('_id') memberId: ObjectId,
+		// @AuthMember('_id') memberId: ObjectId,
 	): Promise<BoardArticle> {
 		console.log('Mutation: updateBoardArticleByAdmin');
 
@@ -100,7 +100,7 @@ export class BoardArticleResolver {
 	@Mutation((returns) => BoardArticle)
 	public async removeBoardArticleByAdmin(
 		@Args('articleId') input: string,
-		@AuthMember('_id') memberId: ObjectId,
+		// @AuthMember('_id') memberId: ObjectId,
 	): Promise<BoardArticle> {
 		console.log('Mutation: removeBoardArticleByAdmin');
 

@@ -13,8 +13,9 @@ import { Direction, Message } from '../../libs/enums/common.enum';
 import { BoardArticleStatus } from '../../libs/enums/board-article.enum';
 import { ViewGroup } from '../../libs/enums/view.enum';
 import { StatisticModifier, T } from '../../libs/types/common';
-import { BoardArticleUpdate } from '../../libs/dto/board-article/board-article.update';
+
 import { lookupMember, shapeIntoMongoObjectId } from '../../libs/config';
+import { BoardArticleUpdate } from '../../libs/dto/board-article/board-article.update';
 
 @Injectable()
 export class BoardArticleService {
@@ -195,7 +196,7 @@ export class BoardArticleService {
 		const { _id, targetKey, modifier } = input;
 
 		return await this.boardArticleModel
-			.findByIdAndUpdate(_id, { $in: { [targetKey]: modifier } }, { new: true })
+			.findByIdAndUpdate(_id, { $inc: { [targetKey]: modifier } }, { new: true })
 			.exec();
 	}
 }
