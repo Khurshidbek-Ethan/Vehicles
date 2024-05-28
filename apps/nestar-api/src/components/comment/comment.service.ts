@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Comment, Comments } from '../../libs/dto/comment/comment';
+import { Comments, Comment } from '../../libs/dto/comment/comment';
 import { MemberService } from '../member/member.service';
 import { PropertyService } from '../property/property.service';
 import { BoardArticleService } from '../board-article/board-article.service';

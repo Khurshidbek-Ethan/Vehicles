@@ -31,7 +31,7 @@ export class BoardArticleService {
 			const result = await this.boardArticleModel.create(input);
 			await this.memberService.memberStatsEditor({
 				_id: memberId,
-				targetKey: 'memberArticle',
+				targetKey: 'memberArticles',
 				modifier: 1,
 			});
 
