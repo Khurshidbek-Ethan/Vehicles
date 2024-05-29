@@ -24,6 +24,7 @@ export class LikeService {
 		} else {
 			try {
 				await this.likeModel.create(input);
+			
 			} catch (err) {
 				console.log('Error on service model toggleLike', err.message);
 				throw new BadRequestException(Message.CREATE_FAILED);
