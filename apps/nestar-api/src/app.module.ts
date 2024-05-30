@@ -8,6 +8,7 @@ import { AppResolver } from './app.resolver';
 import { ComponentsModule } from './components/components.module';
 import { DatabaseModule } from './database/database.module';
 import { T } from './libs/types/common';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
 	imports: [
@@ -34,8 +35,10 @@ import { T } from './libs/types/common';
 			},
 		}),
 		ComponentsModule, // HTTP orqali
-		DatabaseModule, // TCP orqali
+		DatabaseModule,
 		//TODO: Socket Connection
+		SocketModule, // TCP orqali
+
 	],
 	controllers: [AppController], //HTTP
 	providers: [AppService, AppResolver],
