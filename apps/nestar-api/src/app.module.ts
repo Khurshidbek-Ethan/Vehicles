@@ -36,7 +36,6 @@ import { SocketModule } from './socket/socket.module';
 		}),
 		ComponentsModule, // HTTP orqali
 		DatabaseModule,
-		//TODO: Socket Connection
 		SocketModule, // TCP orqali
 
 	],
