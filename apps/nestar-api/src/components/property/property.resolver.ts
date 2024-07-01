@@ -4,7 +4,7 @@ import { PropertyService } from './property.service';
 import { Properties, Property } from '../../libs/dto/property/property';
 import {
 	AgentPropertiesInquiry,
-	AllProperitesInquiry,
+	AllPropertiesInquiry,
 	OrdinaryInquiry,
 	PropertiesInquiry,
 	PropertyInput,
@@ -19,7 +19,6 @@ import { WithoutGuard } from '../auth/guards/without.guard';
 import { shapeIntoMongoObjectId } from '../../libs/config';
 import { PropertyUpdate } from '../../libs/dto/property/property.update';
 import { AuthGuard } from '../auth/guards/auth.guard';
-
 
 @Resolver()
 export class PropertyResolver {
@@ -129,7 +128,7 @@ export class PropertyResolver {
 	@UseGuards(RolesGuard)
 	@Query((returns) => Properties) //-> Properties
 	public async getAllPropertiesByAdmin(
-		@Args('input') input: AllProperitesInquiry,
+		@Args('input') input: AllPropertiesInquiry,
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Properties> {
 		console.log('Query: getAllPropertiesByAdmin');
