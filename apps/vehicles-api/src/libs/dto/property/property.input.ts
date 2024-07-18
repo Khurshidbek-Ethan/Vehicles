@@ -2,7 +2,7 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min } from 'class-validator';
 import { PropertyBrand, PropertyColor, PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import { ObjectId } from 'mongoose';
-import { availableOptions, availablePropertySorts } from '../../config';
+import {  availablePropertySorts } from '../../config';
 import { Direction } from '../../enums/common.enum';
 
 @InputType()
@@ -46,9 +46,7 @@ export class PropertyInput {
 	@Field(() => String, { nullable: true })
 	propertyDesc?: string;
 
-	@IsOptional()
-	@Field(() => Boolean, { nullable: true })
-	propertyBarter?: boolean;
+	
 
 	@IsOptional()
 	@Field(() => Boolean, { nullable: true })

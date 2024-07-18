@@ -9,7 +9,7 @@ export const availableAgentSorts = ['createdAt', 'updatedAt', 'memberLikes', 'me
 // memberlarni olish uchun sorting mehanizmni davomi -> quyidagi misollarni ozida mujassam etgan memberlar
 export const availableMemberSorts = ['createdAt', 'updatedAt', 'memberLikes', 'memberViews'];
 
-export const availableOptions = ['propertyBarter', 'propertyRent'];
+
 export const availablePropertySorts = [
 	'createdAt',
 	'updatedAt',
