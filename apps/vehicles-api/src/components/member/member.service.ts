@@ -16,6 +16,9 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { Follower, Following, MeFollowed } from '../../libs/dto/follow/follow';
 import { lookupAuthMemberLiked } from '../../libs/config';
+import { NotificInput } from '../../libs/dto/notification/notific.input';
+import { NotificationGroup, NotificationStatus, NotificationType } from '../../libs/enums/notification.enum';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class MemberService {
@@ -25,6 +28,7 @@ export class MemberService {
 		private authService: AuthService,
 		private viewService: ViewService,
 		private likeService: LikeService,
+		private notificationService: NotificationService,
 	) {}
 
 	public async signup(input: MemberInput): Promise<Member> {
@@ -140,7 +144,7 @@ export class MemberService {
 							{ $skip: (input.page - 1) * input.limit },
 							{ $limit: input.limit },
 							//meLiked
-							// lookupAuthMemberLiked(memberId,"$_id") -> "$_id" tushirib qoldirsekham mantiq ishloradi 
+							// lookupAuthMemberLiked(memberId,"$_id") -> "$_id" tushirib qoldirsekham mantiq ishloradi
 							lookupAuthMemberLiked(memberId),
 						],
 						metaCounter: [{ $count: 'total' }],
@@ -165,13 +169,28 @@ export class MemberService {
 			likeGroup: LikeGroup.MEMBER,
 		};
 
-		// Like TOGGLE -1 +1 via Like Modules
+		// Like TOGGLE 
 		const modifier: number = await this.likeService.toggleLike(input);
 		const result = await this.memberStatsEditor({
 			_id: likeRefId,
 			targetKey: 'memberLikes',
 			modifier,
 		});
+		const AuthMember :Member = await this.memberModel.findOne({_id:memberId,memberStatus:MemberStatus.ACTIVE})
+
+		const notificInput: NotificInput = {
+			notificationType: NotificationType.LIKE,
+			notificationStatus: NotificationStatus.WAIT,
+			notificationGroup: NotificationGroup.MEMBER,
+			notificationTitle: 'Like',
+			notificationDesc: `${AuthMember.memberNick} Liked your photo `,
+			authorId: memberId,
+			receiverId: target._id,
+
+		};
+
+		await this.notificationService.createNotification(notificInput);
+
 		if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);
 		return result;
 	}

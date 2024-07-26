@@ -8,14 +8,25 @@ import { ViewModule } from '../view/view.module';
 import { LikeModule } from '../like/like.module';
 import { FollowModule } from '../follow/follow.module';
 import FollowSchema from '../../schemas/Follow.model';
+import { NotificationModule } from '../notification/notification.module';
+import NotificationSchema from '../../schemas/Notification.model';
+import MemberModel from '../../schemas/Member.model';
+import { PropertyModule } from '../property/property.module';
 
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: 'Member', schema: MemberSchema }]),
 		MongooseModule.forFeature([{ name: 'Follow', schema: FollowSchema }]),
+		// MongooseModule.forFeature([
+		// 	{
+		// 		name: 'Notification',
+		// 		schema: NotificationSchema,
+		// 	},
+		// ]),
 		AuthModule,
 		ViewModule,
 		LikeModule,
+		NotificationModule,
 	],
 
 	providers: [MemberResolver, MemberService],
