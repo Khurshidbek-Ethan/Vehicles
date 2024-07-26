@@ -17,7 +17,7 @@ import { MemberModule } from '../member/member.module';
 			},
 		]),
 		AuthModule,
-
+		// PropertyModule,
 	],
 	providers: [NotificationResolver, NotificationService],
 	exports: [NotificationService],

@@ -169,14 +169,15 @@ export class MemberService {
 			likeGroup: LikeGroup.MEMBER,
 		};
 
-		// Like TOGGLE 
+		// Like TOGGLE
 		const modifier: number = await this.likeService.toggleLike(input);
 		const result = await this.memberStatsEditor({
 			_id: likeRefId,
 			targetKey: 'memberLikes',
 			modifier,
 		});
-		const AuthMember :Member = await this.memberModel.findOne({_id:memberId,memberStatus:MemberStatus.ACTIVE})
+		const AuthMember: Member = await this.memberModel.findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE }).exec();
+		if (!AuthMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
 		const notificInput: NotificInput = {
 			notificationType: NotificationType.LIKE,
@@ -186,7 +187,6 @@ export class MemberService {
 			notificationDesc: `${AuthMember.memberNick} Liked your photo `,
 			authorId: memberId,
 			receiverId: target._id,
-
 		};
 
 		await this.notificationService.createNotification(notificInput);

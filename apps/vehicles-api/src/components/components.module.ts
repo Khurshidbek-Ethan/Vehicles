@@ -8,6 +8,8 @@ import { ViewModule } from './view/view.module';
 import { FollowModule } from './follow/follow.module';
 import { BoardArticleModule } from './board-article/board-article.module';
 import { NotificationModule } from './notification/notification.module';
+import CommentSchema from '../schemas/Comment.model';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
 	imports: [

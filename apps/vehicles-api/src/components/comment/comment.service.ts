@@ -11,14 +11,26 @@ import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
 import { CommentUpdate } from '../../libs/dto/comment/comment.update';
 import { lookupMember } from '../../libs/config';
 import { T } from '../../libs/types/common';
+import { BoardArticle } from '../../libs/dto/board-article/board-article';
+import { Member } from '../../libs/dto/member/member';
+import { Property } from '../../libs/dto/property/property';
+import { NotificationService } from '../notification/notification.service';
+import { MemberStatus } from '../../libs/enums/member.enum';
+import { NotificationGroup, NotificationStatus, NotificationType } from '../../libs/enums/notification.enum';
+import { AuthMember } from '../auth/decorators/authMember.decorator';
 
 @Injectable()
 export class CommentService {
 	constructor(
 		@InjectModel('Comment') private readonly commentModel: Model<Comment>,
+		@InjectModel('Property') private readonly propertyModel: Model<Property>,
+		@InjectModel('Member') private readonly memberModel: Model<Member>,
+		@InjectModel('BoardArticle') private readonly boardArticleModel: Model<BoardArticle>,
+
 		private readonly memberService: MemberService,
 		private readonly propertyService: PropertyService,
 		private readonly boardArticleService: BoardArticleService,
+		private notificationService: NotificationService,
 	) {}
 
 	public async createComment(memberId: ObjectId, input: CommentInput): Promise<Comment> {
@@ -40,6 +52,26 @@ export class CommentService {
 					targetKey: 'propertyComments',
 					modifier: 1,
 				});
+				const property = await this.propertyModel.findOne({ _id: input.commentRefId }).exec();
+				if (property) {
+					const AuthMember: Member = await this.memberModel
+						.findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE })
+						.exec();
+					if (!AuthMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+
+					const NotificInput = {
+						notificationType: NotificationType.COMMENT,
+						notificationStatus: NotificationStatus.WAIT,
+						notificationGroup: NotificationGroup.PROPERTY,
+						notificationTitle: 'Comment',
+						notificationDesc: `${AuthMember.memberNick} Commented Vehicle `,
+						authorId: memberId,
+						receiverId: property.memberId,
+						propertyId: input.commentRefId,
+					};
+
+					await this.notificationService.createNotification(NotificInput);
+				}
 				break;
 
 			case CommentGroup.ARTICLE:
@@ -48,6 +80,27 @@ export class CommentService {
 					targetKey: 'articleComments',
 					modifier: 1,
 				});
+
+				const article = await this.boardArticleModel.findOne({ _id: input.commentRefId }).exec();
+				if (article) {
+					const AuthMember: Member = await this.memberModel
+						.findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE })
+						.exec();
+					if (!AuthMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+
+					const NotificInput = {
+						notificationType: NotificationType.COMMENT,
+						notificationStatus: NotificationStatus.WAIT,
+						notificationGroup: NotificationGroup.ARTICLE,
+						notificationTitle: 'Comment',
+						notificationDesc: `${AuthMember.memberNick} Commented article `,
+						authorId: memberId,
+						receiverId: article.memberId,
+						articleId: input.commentRefId,
+					};
+
+					await this.notificationService.createNotification(NotificInput);
+				}
 				break;
 
 			case CommentGroup.MEMBER:
@@ -56,6 +109,22 @@ export class CommentService {
 					targetKey: 'memberComments',
 					modifier: 1,
 				});
+
+				const member = await this.memberModel.findOne({ _id: input.commentRefId });
+				if (member) {
+					
+					const NotificInput = {
+						notificationType: NotificationType.COMMENT,
+						notificationStatus: NotificationStatus.WAIT,
+						notificationGroup: NotificationGroup.MEMBER,
+						notificationTitle: 'Comment',
+						notificationDesc: `${member.memberNick} Commented peaple `,
+						authorId: memberId,
+						receiverId: article.memberId,
+					};
+
+					await this.notificationService.createNotification(NotificInput);
+				}
 				break;
 		}
 

@@ -12,21 +12,18 @@ import { NotificationModule } from '../notification/notification.module';
 import NotificationSchema from '../../schemas/Notification.model';
 import MemberModel from '../../schemas/Member.model';
 import { PropertyModule } from '../property/property.module';
+import { BoardArticleModule } from '../board-article/board-article.module';
 
 @Module({
 	imports: [
 		MongooseModule.forFeature([{ name: 'Member', schema: MemberSchema }]),
 		MongooseModule.forFeature([{ name: 'Follow', schema: FollowSchema }]),
-		// MongooseModule.forFeature([
-		// 	{
-		// 		name: 'Notification',
-		// 		schema: NotificationSchema,
-		// 	},
-		// ]),
+
 		AuthModule,
 		ViewModule,
 		LikeModule,
 		NotificationModule,
+		// BoardArticleModule,
 	],
 
 	providers: [MemberResolver, MemberService],
