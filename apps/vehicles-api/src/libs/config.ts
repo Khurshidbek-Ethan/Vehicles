@@ -156,3 +156,6 @@ export const lookupVisit = {
 		as: 'visitedProperty.memberData',
 	},
 };
+
+export const availableNoticeSorts = ['createdAt', 'updatedAt'];
+export const availableFaqSorts = [];

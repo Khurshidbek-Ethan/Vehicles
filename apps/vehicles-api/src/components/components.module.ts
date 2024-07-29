@@ -10,6 +10,8 @@ import { BoardArticleModule } from './board-article/board-article.module';
 import { NotificationModule } from './notification/notification.module';
 import CommentSchema from '../schemas/Comment.model';
 import { MongooseModule } from '@nestjs/mongoose';
+import { FaqModule } from './faq/faq.module';
+import { NoticeModule } from './notice/notice.module';
 
 @Module({
 	imports: [
@@ -22,6 +24,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 		CommentModule,
 		FollowModule,
 		NotificationModule,
+		FaqModule,
+		NoticeModule,
 	],
 })
 export class ComponentsModule {}
