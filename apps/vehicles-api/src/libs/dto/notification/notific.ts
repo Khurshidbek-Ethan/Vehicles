@@ -10,7 +10,7 @@ export class Notific {
 	_id: ObjectId;
 
 	@Field(() => NotificationType, { nullable: true })
-	notificationType: NotificationType.COMMENT;
+	notificationType: NotificationType;
 
 	@IsNotEmpty()
 	@Field(() => NotificationGroup, { nullable: true })

@@ -61,4 +61,5 @@ export class NotificInquiry {
 	@IsNotEmpty()
 	@Field(() => Int)
 	search: NISearch;
+	sort: string;
 }

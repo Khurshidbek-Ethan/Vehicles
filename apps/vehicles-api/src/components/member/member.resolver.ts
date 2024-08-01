@@ -57,8 +57,6 @@ export class MemberResolver {
 
 	@UseGuards(AuthGuard)
 	@Mutation(() => Member)
-	// authMemberni xoxlagan nom bn atash mumkin   authMember=data=memberNick
-	// memberimini umumiy malumoti kerak bolsa @AuthMember()ni ichiga xechnimani qoymeymiz
 	public async updateMember(
 		@Args('input') input: MemberUpdate,
 		@AuthMember('_id') memberId: ObjectId,
