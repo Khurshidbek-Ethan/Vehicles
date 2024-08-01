@@ -1,29 +1,29 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional, Min } from 'class-validator';
-import { Direction } from '../../enums/common.enum';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 import { ObjectId } from 'mongoose';
 import { NotificationGroup, NotificationStatus, NotificationType } from '../../enums/notification.enum';
+import { Direction } from '../../enums/common.enum';
 
 @InputType()
-export class NotificInput {
-	@IsOptional()
-	@Field(() => NotificationType)
+export class NotificationInput {
+	@IsNotEmpty()
+	@IsEnum(NotificationType)
 	notificationType: NotificationType;
 
 	@IsOptional()
-	@Field(() => NotificationStatus)
+	@IsEnum(NotificationStatus)
 	notificationStatus: NotificationStatus;
 
-	@IsOptional()
-	@Field(() => NotificationGroup)
+	@IsNotEmpty()
+	@IsEnum(NotificationGroup)
 	notificationGroup: NotificationGroup;
 
-	@IsOptional()
-	@Field(() => String)
+	@IsNotEmpty()
+	@IsString()
 	notificationTitle: string;
 
 	@IsOptional()
-	@Field(() => String)
+	@IsString()
 	notificationDesc: string;
 
 	authorId: ObjectId;
@@ -37,13 +37,11 @@ export class NotificInput {
 
 @InputType()
 class NISearch {
-	@IsNotEmpty()
-	@Field(() => String)
-	receiverId: ObjectId;
+	@Field(() => String, { nullable: true })
+	receiverId?: string;
 }
-
 @InputType()
-export class NotificInquiry {
+export class NotificationsInquiry {
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
@@ -58,8 +56,7 @@ export class NotificInquiry {
 	@Field(() => Direction, { nullable: true })
 	direction?: Direction;
 
-	@IsNotEmpty()
-	@Field(() => Int)
-	search: NISearch;
-	sort: string;
+	@IsOptional()
+	@Field(() => NISearch, { nullable: true })
+	search?: NISearch;
 }

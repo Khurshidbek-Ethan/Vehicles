@@ -16,7 +16,7 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { Follower, Following, MeFollowed } from '../../libs/dto/follow/follow';
 import { lookupAuthMemberLiked } from '../../libs/config';
-import { NotificInput } from '../../libs/dto/notification/notific.input';
+   
 import { NotificationGroup, NotificationStatus, NotificationType } from '../../libs/enums/notification.enum';
 import { NotificationService } from '../notification/notification.service';
 
@@ -176,10 +176,12 @@ export class MemberService {
 			targetKey: 'memberLikes',
 			modifier,
 		});
-		const AuthMember: Member = await this.memberModel.findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE }).exec();
+		const AuthMember: Member = await this.memberModel
+			.findOne({ _id: memberId, memberStatus: MemberStatus.ACTIVE })
+			.exec();
 		if (!AuthMember) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
-		const notificInput: NotificInput = {
+		const notificInput = {
 			notificationType: NotificationType.LIKE,
 			notificationStatus: NotificationStatus.WAIT,
 			notificationGroup: NotificationGroup.MEMBER,

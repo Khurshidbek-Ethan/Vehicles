@@ -21,7 +21,6 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { Member } from '../../libs/dto/member/member';
 import { MemberStatus } from '../../libs/enums/member.enum';
-import { NotificInput } from '../../libs/dto/notification/notific.input';
 import { NotificationGroup, NotificationStatus, NotificationType } from '../../libs/enums/notification.enum';
 import { NotificationService } from '../notification/notification.service';
 
@@ -168,7 +167,7 @@ export class BoardArticleService {
 			modifier: modifier,
 		});
 
-		const notificInput: NotificInput = {
+		const notificInput= {
 			notificationType: NotificationType.LIKE,
 			notificationStatus: NotificationStatus.WAIT,
 			notificationGroup: NotificationGroup.ARTICLE,
