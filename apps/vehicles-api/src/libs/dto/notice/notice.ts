@@ -1,7 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
-import { NoticeStatus, NoticeType } from '../../enums/notice.enum';
+import { CommentGroup, CommentStatus } from '../../enums/comment.enum';
 import { Member, TotalCounter } from '../member/member';
+import { FaqType } from '../../enums/faq.enum';
+import { NoticeStatus, NoticeType } from '../../enums/notice.enum';
 
 @ObjectType()
 export class NoticeDto {

@@ -1,5 +1,5 @@
-import { Schema } from 'mongoose';
-import { NoticeStatus, NoticeType } from '../libs/enums/notice.enum';
+import mongoose, { Schema } from 'mongoose';
+import { NoticeCategory, NoticeStatus, NoticeType } from '../libs/enums/notice.enum';
 
 const NoticeSchema = new Schema(
 	{

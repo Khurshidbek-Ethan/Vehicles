@@ -19,13 +19,13 @@ registerEnumType(NoticeStatus, {
 });
 
 export enum NoticeType {
-	PROMOTION = 'PROMOTION',
-	NEW_ARRIVAL = 'NEW_ARRIVAL',
-	MAINTENANCE = 'MAINTENANCE',
-	SAFETY = 'SAFETY',
-	WEBSITE_UPDATE = 'WEBSITE_UPDATE',
-	LEGAL_POLICY = 'LEGAL_POLICY',
-	GENERAL_ANNOUNCEMENT = 'GENERAL_ANNOUNCEMENT',
+	PROMOTION = 'Promotion',
+	NEW_ARRIVAL = 'New Arrival',
+	MAINTENANCE = 'Maintenance',
+	SAFETY = 'Safety',
+	WEBSITE_UPDATE = 'Website Update',
+	LEGAL_POLICY = 'Legal Policy',
+	GENERAL_ANNOUNCEMENT = 'General Announcement',
 }
 registerEnumType(NoticeType, {
 	name: 'NoticeType',

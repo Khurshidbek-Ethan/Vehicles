@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { NoticeService } from './notice.service';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -72,6 +71,7 @@ export class NoticeResolver {
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<NoticesDto> {
 		console.log('Query: getNotices');
+		console.log(input, 'GET NOTICES');
 
 		const data = this.noticeService.getNotices(memberId, input);
 

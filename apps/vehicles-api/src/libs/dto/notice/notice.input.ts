@@ -1,11 +1,12 @@
-import { Field, InputType, Int } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongoose';
+import { CommentGroup, CommentStatus } from '../../enums/comment.enum';
+import {  TotalCounter } from '../member/member';
+import { FaqType } from '../../enums/faq.enum';
 import { IsNotEmpty, Min, IsOptional, IsIn, Length } from 'class-validator';
-
-import { Direction } from '../../enums/common.enum';
+import { availableCommentSorts, availableNoticeSorts } from '../../config';
 import { NoticeStatus, NoticeType } from '../../enums/notice.enum';
-import { availableNoticeSorts } from '../../config';
-
+import { Direction } from '../../enums/common.enum';
 
 @InputType()
 export class NoticeInputDto {
@@ -41,9 +42,9 @@ export class NoticeInquiryDto {
 	@Field(() => String, { nullable: true })
 	sort?: string;
 
-	@IsOptional()
-	@Field(() => Direction, { nullable: true })
-	direction?: Direction;
+	// @IsOptional()
+	// @Field(() => Direction, { nullable: true })
+	// direction?: Direction;
 
 	@IsOptional()
 	@IsIn(Object.values(NoticeType))
@@ -53,4 +54,8 @@ export class NoticeInquiryDto {
 	@IsOptional()
 	@Field(() => NoticeStatus, { nullable: true })
 	noticeStatus?: NoticeStatus;
+
+	@IsOptional()
+	@Field(() => String, { nullable: true })
+	text?: string;
 }
