@@ -5,6 +5,8 @@ import { FollowResolver } from './follow.resolver';
 import { FollowService } from './follow.service';
 import { AuthModule } from '../auth/auth.module';
 import { MemberModule } from '../member/member.module';
+import MemberSchema from '../../schemas/Member.model';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
 	imports: [
@@ -14,11 +16,16 @@ import { MemberModule } from '../member/member.module';
 				schema: FollowSchema,
 			},
 		]),
-        AuthModule,
-        MemberModule
-	
+		MongooseModule.forFeature([
+			{
+				name: 'Member',
+				schema: MemberSchema,
+			},
+		]),
+		AuthModule,
+		MemberModule,
+		NotificationModule,
 	],
-
 	providers: [FollowResolver, FollowService],
 	exports: [FollowService],
 })
