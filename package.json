@@ -4,9 +4,9 @@
 	"description": "",
 	"author": "",
 	"private": true,
-	"license": "UNLICENSED",
+	"license": "ITC",
 	"scripts": {
-		"build": "nest build",
+		"build": "nest build vehicles-api && nest build vehicles-batch",
 		"format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
@@ -93,6 +93,3 @@
 		]
 	}
 }
-
-
-
