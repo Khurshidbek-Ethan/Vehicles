@@ -52,10 +52,6 @@ export class PropertyInput {
 	@Field(() => String, { nullable: true })
 	propertyDesc?: string;
 
-	@IsOptional()
-	@Field(() => Boolean, { nullable: true })
-	propertyRent?: boolean;
-
 	// bu frontendan yuborilishi talab etilmaydi. Authentication bosqichida biz memberID ni qabul qilib olamiz chunki
 	memberId?: ObjectId;
 

@@ -1,7 +1,13 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 import { IsInt, IsNotEmpty, IsOptional, Length, Min } from 'class-validator';
 import { ObjectId } from 'mongoose';
-import { PropertyBrand, PropertyColor, PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
+import {
+	PropertyBrand,
+	PropertyColor,
+	PropertyLocation,
+	PropertyStatus,
+	PropertyType,
+} from '../../enums/property.enum';
 
 @InputType()
 export class PropertyUpdate {
@@ -52,10 +58,6 @@ export class PropertyUpdate {
 	@Length(5, 500)
 	@Field(() => String, { nullable: true })
 	propertyDesc?: string;
-
-	@IsOptional()
-	@Field(() => Boolean, { nullable: true })
-	propertyRent?: boolean;
 
 	soldAt?: Date;
 
