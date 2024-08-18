@@ -12,7 +12,13 @@ import {
 } from '../../libs/dto/property/property.input';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { MemberService } from '../member/member.service';
-import { PropertyBrand, PropertyColor, PropertyLocation, PropertyStatus, PropertyType } from '../../libs/enums/property.enum';
+import {
+	PropertyBrand,
+	PropertyColor,
+	PropertyLocation,
+	PropertyStatus,
+	PropertyType,
+} from '../../libs/enums/property.enum';
 import { StatisticModifier, T } from '../../libs/types/common';
 import { ViewGroup } from '../../libs/enums/view.enum';
 import { ViewService } from '../view/view.service';
@@ -108,6 +114,8 @@ export class PropertyService {
 	}
 
 	public async getProperties(memberId: ObjectId, input: PropertiesInquiry): Promise<Properties> {
+		console.log('input -=-=-=-=-= ', input);
+
 		const match: T = { propertyStatus: PropertyStatus.ACTIVE };
 		const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
 
@@ -137,6 +145,7 @@ export class PropertyService {
 			])
 			.exec();
 		if (!result) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
+		console.log('result --------', result[0]);
 
 		return result[0];
 	}
@@ -225,17 +234,17 @@ export class PropertyService {
 			modifier,
 		});
 
-			const NotificInput = {
-				notificationType: NotificationType.LIKE,
-				notificationStatus: NotificationStatus.WAIT,
-				notificationGroup: NotificationGroup.PROPERTY,
-				notificationTitle: 'Like',
-				notificationDesc: `${AuthMember.memberNick} Liked Vehicle `,
-				authorId: memberId,
-				receiverId: target.memberId,
-			};
+		const NotificInput = {
+			notificationType: NotificationType.LIKE,
+			notificationStatus: NotificationStatus.WAIT,
+			notificationGroup: NotificationGroup.PROPERTY,
+			notificationTitle: 'Like',
+			notificationDesc: `${AuthMember.memberNick} Liked Vehicle `,
+			authorId: memberId,
+			receiverId: target.memberId,
+		};
 
-			await this.notificationService.createNotification(NotificInput);
+		await this.notificationService.createNotification(NotificInput);
 		if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);
 		return result;
 	}
